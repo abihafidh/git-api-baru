@@ -89,6 +89,7 @@ app.post("/auth/login", async (req, res, next) => {
       return res.status(401).json({ error: "Kredensial tidak valid" });
     }
 
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ error: "Kredensial tidak valid" });
     }
@@ -197,7 +198,6 @@ app.delete(
 );
 
 // === DIRECTOR ROUTES (TUGAS PRAKTIKUM) ===
-// (Mahasiswa harus me-refactor endpoint /directors dengan pola yang sama)
 
 // === FALLBACK & ERROR HANDLING ===
 app.use((req, res) => {
