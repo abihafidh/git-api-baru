@@ -34,14 +34,13 @@ app.post("/auth/register", async (req, res, next) => {
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const sql =
-      "INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username";
+    const sql = "INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username";
     const result = await db.query(sql, [
       username.toLowerCase(),
       hashedPassword,
       "user",
     ]);
-    hashedPassword, "user";
+    // hashedPassword, "user";
     res.status(201).json(result.rows[0]);
   } catch (err) {
     if (err.code === "23505") {
